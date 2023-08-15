@@ -61,6 +61,25 @@ const data = [
 
 function Week1() {
   const [menu, setMenu] = useState(data);
+
+  function AdjInventory(id, mode) {
+    const newMenu = menu.map((newItem) =>
+      newItem.id === id
+        ? {
+            ...newItem,
+            inventory:
+              mode === 'add'
+                ? (newItem.inventory += 1)
+                : (newItem.inventory -= 1),
+          }
+        : newItem
+    );
+    // const newMenu = [...data]; //展開 ES6
+    // newMenu[0].inventory += 1;
+    console.log(newMenu);
+    setMenu(newMenu);
+  }
+
   return (
     <table>
       <thead>
@@ -85,7 +104,7 @@ function Week1() {
                       newItem.id === item.id
                         ? {
                             ...newItem,
-                            inventory: newItem.inventory++,
+                            inventory: (newItem.inventory += 1),
                           }
                         : newItem
                     );
@@ -98,7 +117,7 @@ function Week1() {
                   +
                 </button>
                 {item.inventory}
-                <button>-</button>
+                <button onClick={() => AdjInventory(item.id, 'min')}>-</button>
               </td>
             </tr>
           );
